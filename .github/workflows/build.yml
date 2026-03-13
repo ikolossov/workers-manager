@@ -1,7 +1,9 @@
 name: build
 
 on:
-  release:
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -16,9 +18,8 @@ jobs:
       - name: Build binary
         run: go build -v -o app main.go
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - name: Create Release and Upload Asset
+        uses: softprops/action-gh-release@v2
         with:
-          name: workers-manager
-          path: app
-          retention-days: 5
+          files: workers-manager
+          body: "Автоматическая сборка для версии ${{ github.ref_name }}"
