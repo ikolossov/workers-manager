@@ -1,0 +1,24 @@
+name: build
+
+on:
+  release:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: go mod download
+
+      - name: Build binary
+        run: go build -v -o app main.go
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workers-manager
+          path: app
+          retention-days: 5
