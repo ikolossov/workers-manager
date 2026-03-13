@@ -16,7 +16,7 @@ jobs:
         run: go mod download
 
       - name: Build binary
-        run: go build -v -o workers-manager main.go
+        run: CGO_ENABLED=0 go build -v -o workers-manager main.go
 
       - name: Create Release and Upload Asset
         uses: softprops/action-gh-release@v2
